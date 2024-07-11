@@ -32,7 +32,8 @@ const map = new maplibregl.Map({
 						'match',
 						['get', 'type'],
 						['motorway','trunk','primary','secondary','tertiary','residential'], ['*', ['get', 'radius'], 0.2],
-						['amenity'], ['*', ['get', 'radius'], 0.3]
+						['amenity'], ['*', ['get', 'radius'], 0.3],
+						0.1
 					],
                     'circle-color': [
 						'match',
