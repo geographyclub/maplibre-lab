@@ -1,7 +1,9 @@
 # maplibre-lab
 Experiments in web mapping with MapLibre.  
 
-Making MVT vector tiles of nightlights from osm points:  
+### How I make MVT vector tiles with BASH/GDAL
+
+Nightlights:  
 ```
 #!/bin/bash
 cd ~/maplibre-testing
@@ -12,5 +14,19 @@ ogr2ogr -f MVT vector-tiles-nightlight PG:dbname=osm -sql "SELECT name, highway 
 cp tiles-nightlight.json vector-tiles-nightlight
 cp cors_server.py vector-tiles-nightlight
 cd vector-tiles-nightlight
+./cors_server.py
+```
+
+Blockworld:  
+```
+#!/bin/bash
+cd ~/maplibre-testing
+rm -rf vector-tiles-blockworld
+
+ogr2ogr -f MVT -s_srs 'epsg:4326' -t_srs 'epsg:3857' vector-tiles-blockworld ~/maps/srtm/topo15_432.gpkg -sql "SELECT fid, DN, geom FROM topo15_432" -nlt MULTIPOLYGON -nln blockworld -clipsrc -175 -85 175 85 -dsco MINZOOM=3 -dsco MAXZOOM=3 -dsco COMPRESS=NO -dsco SIMPLIFICATION=0.0 -dsco SIMPLIFICATION_MAX_ZOOM=0.0
+
+cp tiles-blockworld.json vector-tiles-blockworld/
+cp cors_server.py vector-tiles-blockworld/
+cd vector-tiles-blockworld
 ./cors_server.py
 ```

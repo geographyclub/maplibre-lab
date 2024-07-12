@@ -129,13 +129,6 @@
   }
 
   map.on('load', () => {
-    const layers = map.getStyle().layers;
-    layers.forEach(layer => {
-      if (layer.type === 'symbol' && layer.layout['text-field'] !== undefined) {
-        map.removeLayer(layer.id);
-      }
-    });
-
     // Start the animation and frame capture at regular intervals
     setInterval(rotateZoomAndSaveFrame, frameInterval);
   });
