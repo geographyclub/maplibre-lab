@@ -2,11 +2,11 @@
    "tiles":[
       "http://localhost:8000/{z}/{x}/{y}.pbf"
    ],
-   "id":"topo15_432",
-   "name":"topo15_432",
+   "id":"topo15",
+   "name":"topo15",
    "format":"pbf",
    "type":"vector",
-   "description":"world of blocks",
+   "description":"World of blocks",
    "bounds":[-180,-90,180,90],
    "center":[0,0],
    "minzoom":0,

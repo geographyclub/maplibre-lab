@@ -31,37 +31,43 @@ const map = new maplibregl.Map({
 					'fill-extrusion-color': [
 						'interpolate', ['linear'],
 						['get', 'DN'],
+						// gmt_ocean
+						-6000, 'rgb(  0,  5, 25)',
+						-5000, 'rgb(  0,150,200)',
+						-100, 'rgb(211,250,211)',
+						// wiki-2.0
 						0, 'rgb(148,191,139)',
-						500, 'rgb(168,198,143)',
-						1000, 'rgb(232,225,182)',
-						2000, 'rgb(211,202,157)',
-						3000, 'rgb(195,167,107)',
+						100, 'rgb(168,198,143)',
+						500, 'rgb(232,225,182)',
+						1000, 'rgb(211,202,157)',
+						2000, 'rgb(195,167,107)',
 					],
 					//'fill-extrusion-height': ['*', ['get', 'DN'], 100],
 					'fill-extrusion-height': [
 						'interpolate',
 						['linear'],
 						['get', 'DN'],
-						0, 0,
-						100, ['^', ['get', 'DN'], 2.2],
-						500, ['*', ['get', 'DN'], 200]
+						-10000, 10000,
+						0, 1000000,
+						100, ['+', ['^', ['get', 'DN'], 2], 1000000],
+						500, ['+', ['*', ['get', 'DN'], 100], 1000000]
 					],
-					'fill-extrusion-base': 0,
+					//'fill-extrusion-base': 0,
 					'fill-extrusion-opacity': 1
 				}
 			}
 		]
 	},
-	center: [27.07936080667298, -7.345200004083438],
-	zoom: 3,
-    minZoom: 3, // Minimum zoom level
+	center: [129.18025421992627, -9.00172547463795],
+	zoom: 2,
+    minZoom: 2, // Minimum zoom level
     maxZoom: 3, // Maximum zoom level
-	bearing: 20,
+	bearing: -21,
 	pitch: 60,
 	pixelRatio: 2 // Higher pixel ratio
 });
 
-const zoomIncrement = 0; // Adjust the zoom rate as needed
+const zoomIncrement = 0.001; // Adjust the zoom rate as needed
 const pitchIncrement = 0; // Adjust the rotation rate as needed
 const latIncrement = 0.1; // Adjust the latitude increment as needed
 const frameInterval = 1000; // Interval between frame captures (in ms)
@@ -104,7 +110,7 @@ canvas.toBlob(function(blob) {
 
 map.on('load', () => {
 	// Start the animation and frame capture at regular intervals
-	setInterval(rotateZoomAndSaveFrame, frameInterval);
+	//setInterval(rotateZoomAndSaveFrame, frameInterval);
 
     map.setLight({
         'anchor': 'viewport',
