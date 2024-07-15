@@ -2,8 +2,8 @@
    "tiles":[
       "http://localhost:8000/{z}/{x}/{y}.pbf"
    ],
-   "id":"topo15",
-   "name":"topo15",
+   "id":"grid",
+   "name":"grid",
    "format":"pbf",
    "type":"vector",
    "description":"World of blocks",
@@ -15,8 +15,11 @@
       {
          "id":"blockworld",
          "fields":{
-            "fid":"Number",
-            "DN":"Number"
+            "dem_mean":"Number",
+            "slope_mean":"Number",
+            "up_area":"Number",
+            "snw_pc_syr":"Number",
+            "cmi_ix_syr":"Number"
          },
          "minzoom":0,
          "maxzoom":15

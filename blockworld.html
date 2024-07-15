@@ -18,7 +18,7 @@ const map = new maplibregl.Map({
 		sources: {
 			'vector-tiles': {
 				type: 'vector',
-				url: 'http://localhost:8000/tiles-blockworld.json' // Path to your tiles.json file
+				url: 'http://localhost:8000/blockworld.json' // Path to your tiles.json file
 			}
 		},
 		layers: [
@@ -30,7 +30,7 @@ const map = new maplibregl.Map({
 				'paint': {
 					'fill-extrusion-color': [
 						'interpolate', ['linear'],
-						['get', 'DN'],
+						['get', 'dem_mean'],
 						// gmt_ocean
 						-6000, 'rgb(  0,  5, 25)',
 						-5000, 'rgb(  0,150,200)',
@@ -42,24 +42,23 @@ const map = new maplibregl.Map({
 						1000, 'rgb(211,202,157)',
 						2000, 'rgb(195,167,107)',
 					],
-					//'fill-extrusion-height': ['*', ['get', 'DN'], 100],
 					'fill-extrusion-height': [
 						'interpolate',
 						['linear'],
-						['get', 'DN'],
-						-10000, 10000,
-						0, 1000000,
-						100, ['+', ['^', ['get', 'DN'], 2], 1000000],
-						500, ['+', ['*', ['get', 'DN'], 100], 1000000]
+						['get', 'dem_mean'],
+						-11000, 11000,
+						0, 300000,
+						100, ['+', ['^', ['get', 'dem_mean'], 1.5], 310000],
+						500, ['+', ['^', ['get', 'dem_mean'], 1.5], 310000],
 					],
-					//'fill-extrusion-base': 0,
+					'fill-extrusion-base': 0,
 					'fill-extrusion-opacity': 1
 				}
 			}
 		]
 	},
 	center: [129.18025421992627, -9.00172547463795],
-	zoom: 2,
+	zoom: 1,
     minZoom: 2, // Minimum zoom level
     maxZoom: 3, // Maximum zoom level
 	bearing: -21,
@@ -88,7 +87,7 @@ map.setCenter([currentCenter.lng, currentCenter.lat + latIncrement], { duration:
 
 // Wait for the map to finish rendering
 map.once('idle', () => {
-  //saveFrame();
+//  saveFrame();
 });
 }
 
@@ -110,7 +109,7 @@ canvas.toBlob(function(blob) {
 
 map.on('load', () => {
 	// Start the animation and frame capture at regular intervals
-	//setInterval(rotateZoomAndSaveFrame, frameInterval);
+//	setInterval(rotateZoomAndSaveFrame, frameInterval);
 
     map.setLight({
         'anchor': 'viewport',
