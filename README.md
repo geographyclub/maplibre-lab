@@ -3,7 +3,7 @@ Experiments in web mapping with MapLibre.
 
 ### How I make MVT vector tiles with BASH/GDAL
 
-Nightlights:  
+Night lights from OpenStreetMap points:  
 ```
 #!/bin/bash
 
@@ -18,7 +18,7 @@ cd vector-tiles-nightlight
 ./cors_server.py
 ```
 
-Blockworld:  
+Block world (big) from topo:  
 ```
 #!/bin/bash
 
@@ -26,6 +26,21 @@ cd ~/maplibre-testing
 rm -rf vector-tiles-blockworld
 
 ogr2ogr -f MVT -s_srs 'epsg:4326' -t_srs 'epsg:3857' vector-tiles-blockworld ~/maps/srtm/topo15_432.gpkg -sql "SELECT fid, DN, geom FROM topo15_432" -nlt MULTIPOLYGON -nln blockworld -clipsrc -180 -85 180 85 -dsco MINZOOM=2 -dsco MAXZOOM=3 -dsco COMPRESS=NO
+
+cp tiles-blockworld.json vector-tiles-blockworld
+cp cors_server.py vector-tiles-blockworld
+cd vector-tiles-blockworld
+./cors_server.py
+```
+
+Block world (small) from grid:  
+```
+#!/bin/bash
+
+cd ~/maplibre-testing
+rm -rf vector-tiles-blockworld
+
+ogr2ogr -f MVT -s_srs 'epsg:4326' -t_srs 'epsg:3857' vector-tiles-blockworld PG:dbname=world -sql "SELECT up_area, dem_mean, geom FROM grid02" -nlt MULTIPOLYGON -nln blockworld -clipsrc -180 -90 180 90 -dsco MINZOOM=3 -dsco MAXZOOM=3 -dsco COMPRESS=NO
 
 cp tiles-blockworld.json vector-tiles-blockworld
 cp cors_server.py vector-tiles-blockworld
